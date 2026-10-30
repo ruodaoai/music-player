@@ -1,0 +1,34 @@
+{
+  "displayName": "音乐播放器",
+  "slug": "music-player",
+  "summary": "把酷狗音乐搬进桌面端：热搜、搜索、点播取播放地址、LRC 歌词、排行榜、歌单、新歌速递一应俱全，仿官方听歌主流程。音频走本机 MoeKoe 客户端的本地 API，插件本身零依赖；没装 MoeKoe 时界面里一键安装。",
+  "description": "为什么是 MoeKoe 方案：直连酷狗播放接口有严格的设备风控（errcode 20028「本次请求需要验证」），匿名请求几乎必被拦，海外 IP 还会被区域封锁。MoeKoe Music 客户端启动时已经完成设备注册与风控处理，匿名就能拿到播放地址——插件因此把酷狗能力全部接到本机 MoeKoe 的本地 API（默认 127.0.0.1:6521）上，自己不内嵌服务、不带任何依赖。\n\n【能做什么】\n• 热搜榜：当下大家在搜什么，点一下直接搜；\n• 搜索：按关键词搜歌，结果带「免费 / VIP 试听」标注；\n• 点播：拿到可直接播放的音频地址，配合内置播放器听；\n• 歌词：拉取 LRC，逐行滚动；\n• 排行榜：榜单列表 + 榜内完整歌曲（默认 100 首/页，可翻页）；\n• 歌单：解析歌单详情与其中歌曲；\n• 新歌速递：华语 / 欧美 / 韩国 / 日本四类。\n\n【不用先装客户端也能用】\n没装 MoeKoe 时，点播被拦的界面会出现「一键安装 MoeKoe Music」按钮，插件自动从官方 release 下载安装包、静默安装并启动；也可以自己到 music.moekoe.cn 装一份，打开一次完成设备注册，之后保持运行（插件在它没运行时也会自动拉起）。\n\n【音质与版权边界】\n默认 320k，可切 128 / 320 / FLAC / Hi-Res；标准音质通常能完整播放，FLAC 与 Hi-Res 需要 MoeKoe 里登录 VIP 账号；填入自己的酷狗 Cookie 后 VIP 歌曲可完整播放。插件不做任何会员绕过——列表里的「VIP 试听」就是试听，试听时长按官方口径显示。个别歌曲提示「需要安全验证」时，在 MoeKoe 客户端里播放一次完成验证即可。\n\n【数据与依赖】\n所有请求都在本机与本机客户端之间发生，不经过若道服务器；插件自身零 npm 依赖，Node 18+ 即可运行。能力来自 MoeKoe Music（GPL-2.0）与其内置 KuGouMusicApi（MIT），版权归原作者，仅供学习研究。",
+  "author": "Ruodao",
+  "category": "Utilities",
+  "tags": [
+    "音乐",
+    "酷狗",
+    "播放器",
+    "歌词",
+    "排行榜",
+    "歌单",
+    "新歌",
+    "热搜",
+    "MoeKoe"
+  ],
+  "version": "2.1.5",
+  "repositoryUrl": "",
+  "sourceRef": "",
+  "pluginPath": "",
+  "permissions": [
+    "network",
+    "process"
+  ],
+  "capabilities": [
+    "commands",
+    "code.execute"
+  ],
+  "hasMcpServers": false,
+  "hasSkills": false,
+  "readme": "# 音乐播放（MoeKoe 方案）— Ruodao 功能插件 v2.1.5\n\n基于 [MoeKoe Music](https://github.com/iAJue/MoeKoeMusic) 客户端内置的本地 KuGouMusicApi 服务的若道桌面端音乐插件。**所有酷狗能力（搜索/点播/歌词/榜单/歌单/新歌/热搜）都走本机 MoeKoe Music 的本地 API（默认 `127.0.0.1:6521`）**，插件自身零依赖、零内嵌服务。\n\n## 为什么是 MoeKoe 方案\n\n直接对接酷狗 API 的播放接口有严格的设备风控（errcode 20028「本次请求需要验证」），匿名几乎必然被拦，且海外 IP 会直接被区域封锁。MoeKoe Music 客户端启动时已完成设备注册与风控处理，匿名即可取播放地址。[codex-harness-desktop](https://github.com/PMZPZM0/codex-harness-desktop) 的音乐功能正是采用同一方案（调用 MoeKoe 本地 API 6521 端口）。\n\n## 前置：MoeKoe Music\n\n1. 到 [music.moekoe.cn](https://music.moekoe.cn/) 或 [GitHub Releases](https://github.com/iAJue/MoeKoeMusic/releases) 下载安装 MoeKoe Music 客户端\n2. 打开一次（完成设备注册，本地 API 在 6521 端口就绪）\n3. 保持客户端运行即可——插件会在其未运行时自动拉起\n\n**或者更简单**：不装也没关系，插件界面点播被拦时会出现「**一键安装 MoeKoe Music**」按钮，自动从官方 release 下载安装包并静默安装、启动。\n\n## 配置\n\n| 变量 | 说明 | 默认 |\n|---|---|---|\n| `RUODAO_MUSIC_API_BASE` | MoeKoe 本地 API 地址 | `http://127.0.0.1:6521` |\n| `RUODAO_KUGOU_COOKIE` | 酷狗 VIP Cookie（`token=...;userid=...`，留空则 VIP 歌仅试听） | 空 |\n| `RUODAO_MUSIC_QUALITY` | 默认音质：`128` / `320` / `flac` / `hi` | `320` |\n| `RUODAO_MUSIC_PAGESIZE` | 搜索每页条数 | `20` |\n| `MOEKOE_EXE` | MoeKoe 客户端 exe 路径（可选，自动拉起用） | 自动探测 |"
+}

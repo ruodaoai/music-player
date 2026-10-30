@@ -1,0 +1,10 @@
+{
+  "name": "music-player",
+  "displayName": "音乐播放（酷狗）",
+  "version": "2.1.5",
+  "description": "基于 MakcRe/KuGouMusicApi 的音乐功能插件：热搜、搜索、点播取播放地址、歌词、排行榜、歌单、新歌速递。",
+  "author": {
+    "name": "Ruodao"
+  },
+  "ui": "./ui.json"
+}

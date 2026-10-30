@@ -1,0 +1,50 @@
+{
+  "route": "music-player",
+  "label": "音乐播放",
+  "description": "基于 MoeKoe Music 客户端的酷狗音乐功能插件：搜索、点播、歌词、排行榜、歌单、新歌速递、热搜。需要本机运行 MoeKoe Music（未安装可在界面一键安装）。",
+  "icon": "Music",
+  "version": "2.1.5",
+  "author": "Ruodao",
+  "capabilities": [
+    "commands",
+    "code.execute",
+    "music-search",
+    "music-play",
+    "lyric",
+    "rank",
+    "playlist"
+  ],
+  "standalone": {
+    "exportable": true,
+    "shell": "generic",
+    "productName": "音乐播放",
+    "executableName": "MusicPlayer",
+    "storageKeys": []
+  },
+  "configFields": [
+    {
+      "key": "RUODAO_MUSIC_API_BASE",
+      "label": "MoeKoe Music 本地 API 地址（默认 127.0.0.1:6521，一般无需修改）",
+      "placeholder": "http://127.0.0.1:6521",
+      "secret": false
+    },
+    {
+      "key": "RUODAO_KUGOU_COOKIE",
+      "label": "酷狗 Cookie（VIP 解锁：需手机端 token，网页 Cookie 对手机接口无效）",
+      "placeholder": "token=...;userid=...",
+      "secret": true
+    },
+    {
+      "key": "RUODAO_MUSIC_QUALITY",
+      "label": "默认音质（128/320/flac/hi）",
+      "placeholder": "320",
+      "secret": false
+    },
+    {
+      "key": "RUODAO_MUSIC_PAGESIZE",
+      "label": "搜索每页条数",
+      "placeholder": "20",
+      "secret": false
+    }
+  ]
+}

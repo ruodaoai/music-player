@@ -1,0 +1,188 @@
+{
+  "id": "com.ruodao.music-player",
+  "name": "音乐播放（酷狗）",
+  "version": "2.1.5",
+  "apiVersion": ">=0.1.0 <0.2.0",
+  "description": "基于 MakcRe/KuGouMusicApi 的音乐功能插件：热搜、搜索、点播取播放地址、歌词、排行榜、歌单、新歌速递。",
+  "requires": {
+    "capabilities": {
+      "required": {
+        "commands": "0.1.0",
+        "code.execute": "0.1.0"
+      }
+    }
+  },
+  "permissions": [
+    "network",
+    "process"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "id": "com.ruodao.music.doctor",
+        "title": "环境自检（KuGouMusicApi 服务连通性）",
+        "description": "检查自建 KuGouMusicApi 服务是否可访问，不产生费用。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "doctor"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.search",
+        "title": "搜索歌曲",
+        "description": "按关键词搜索酷狗歌曲，返回曲名、歌手、hash、专辑、时长，可分页。stdin 传 { keywords, page?, pagesize? }。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "search"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.play",
+        "title": "点播歌曲（获取播放地址）",
+        "description": "传 { keywords } 自动搜索点播第一首，或传 { hash, album_audio_id?, album_id? } 精确点播；返回可直接播放的音频 URL，音质可配置（128/320/flac/hi）。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "play"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.lyric",
+        "title": "获取歌词（LRC）",
+        "description": "按 hash 或关键词获取逐行 LRC 歌词文本。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "lyric"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.rank",
+        "title": "排行榜（酷狗官方榜）",
+        "description": "获取酷狗官方排行榜列表（TOP500、飙升榜、热歌榜等），传 { rankid, page?, pagesize? } 可查看某榜单完整歌曲（/rank/audio，最多 100 首/页）。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "rank"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.playlist",
+        "title": "歌单详情与歌曲列表",
+        "description": "按歌单 id（global_collection_id）获取歌单详情与歌曲列表，可分页。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "playlist"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.top",
+        "title": "新歌速递",
+        "description": "获取新歌速递：{ type } 1=华语 2=欧美 3=韩国 4=日本。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "top"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.hot",
+        "title": "热搜榜",
+        "description": "获取酷狗实时热搜关键词，可直接用于搜索。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "hot"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.moekoe-install",
+        "title": "一键安装 MoeKoe Music（解锁匿名播放通道）",
+        "description": "从 MoeKoe Music 官方 release 下载安装包并静默安装、启动其本地服务，插件自动借道取播放地址（与 codex-harness-desktop 同款方案）。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "moekoe_install"
+          ],
+          "cwd": ".",
+          "timeoutMs": 600000
+        }
+      },
+      {
+        "id": "com.ruodao.music.moekoe-progress",
+        "title": "MoeKoe 安装进度查询",
+        "description": "查询后台 MoeKoe Music 安装的实时进度（下载百分比/安装/启动/设备注册）。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "moekoe_progress"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      },
+      {
+        "id": "com.ruodao.music.moekoe-status",
+        "title": "MoeKoe Music 状态检测",
+        "description": "检测本机 MoeKoe Music 安装/运行/设备注册状态。",
+        "action": {
+          "type": "process",
+          "command": "node",
+          "args": [
+            "bin/music.mjs",
+            "moekoe_status"
+          ],
+          "cwd": ".",
+          "timeoutMs": 30000
+        }
+      }
+    ]
+  }
+}
